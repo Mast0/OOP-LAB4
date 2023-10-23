@@ -10,7 +10,7 @@
 
 
 
-        public Game(GameAccount user1, GameAccount user2)
+        public Game(GameAccount user1, GameAccount user2, int rate = 0)
         {
             if (user1 == user2)
             {

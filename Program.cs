@@ -1,5 +1,6 @@
 ﻿using System;
 using GameClasses;
+using FactoryGameClasses;
 
 namespace MainClass
 {
@@ -10,11 +11,15 @@ namespace MainClass
             Game.IdentificationNumber = 1000;
             GameAccount user = new GameAccount("Mast");
             GameAccount gamer = new GameAccount("Deremion");
-            for (int i = 0; i < 10; i++)
-            {
-                //Game newGame = new Game(user, gamer, 10);
-                Console.WriteLine($"Game №{i+1} is end.\n\t Winner: {newGame.StartGame()}\n\n");
-            }
+
+            var trainGame = new TrainGameCreator();
+            trainGame.StartGame(user, gamer);
+
+            var randomRateGame = new RandomRateGameCreator();
+            randomRateGame.StartGame(user, gamer);
+
+            var commonGame = new CommonGameCreator();
+            commonGame.StartGame(user, gamer, 50);
 
             user.GetStats();
         }
