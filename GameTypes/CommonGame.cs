@@ -6,6 +6,7 @@
 		public CommonGame(GameAccount user1, GameAccount user2, int rate) : base(user1, user2)
 		{
 			Rate = rate;
+			GameType = "Common game\t";
 		}
 
 		public override int GameRateCount()

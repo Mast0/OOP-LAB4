@@ -7,6 +7,7 @@
         private GameAccount User1;
         private GameAccount User2;
         private string GameStatistic;
+        protected string GameType = "Game";
 
 
 
@@ -36,7 +37,7 @@
                 User2.LoseGame(this);
                 winner = User1.UserName;
 
-                GameStatistic = $"\t Game Identification Number: {Index}\n\t Winner: {User1.UserName}\t\t Loser: {User2.UserName}" +
+                GameStatistic = $"\t Game type: {GameType}\t\t Game Identification Number: {Index}\n\t Winner: {User1.UserName}\t\t\t Loser: {User2.UserName}" +
                 $"\n\t {User1.UserName} current raiting: {User1.CurrentRating}\t\t {User2.UserName} current raiting: {User2.CurrentRating}";
             }
             else
@@ -45,7 +46,7 @@
                 User2.WinGame(this);
                 winner = User2.UserName;
 
-                GameStatistic = $"\t Game Identification Number: {Index}\n\t Winner: {User2.UserName}\t\t Loser: {User1.UserName}" +
+                GameStatistic = $"\t Game type: {GameType}\t\t Game Identification Number: {Index}\n\t Winner: {User2.UserName}\t\t\t Loser: {User1.UserName}" +
                 $"\n\t {User2.UserName} current raiting: {User2.CurrentRating}\t\t {User1.UserName} current raiting: {User1.CurrentRating}";
                 
             }

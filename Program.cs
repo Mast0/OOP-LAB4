@@ -1,5 +1,4 @@
-﻿using System;
-using GameClasses;
+﻿using GameClasses;
 using FactoryGameClasses;
 
 namespace MainClass
@@ -9,8 +8,8 @@ namespace MainClass
         static void Main(string[] args)
         {
             Game.IdentificationNumber = 1000;
-            GameAccount user = new GameAccount("Mast");
-            GameAccount gamer = new GameAccount("Deremion");
+            var user = new GAccDobleRate("Mast");
+            var gamer = new GAccLowRateDivide("Deremion");
 
             var trainGame = new TrainGameCreator();
             trainGame.StartGame(user, gamer);
