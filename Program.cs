@@ -11,16 +11,15 @@ namespace MainClass
             var user = new GAccDobleRate("Mast");
             var gamer = new GAccLowRateDivide("Deremion");
 
-            var trainGame = new TrainGameCreator();
-            trainGame.StartGame(user, gamer);
+            var gameCreator = new GameCreator();
 
-            var randomRateGame = new RandomRateGameCreator();
-            randomRateGame.StartGame(user, gamer);
+            gameCreator.StartGame(user, gamer, GameTypes.TrainGame);
 
-            var commonGame = new CommonGameCreator();
-            commonGame.StartGame(user, gamer, 50);
+			gameCreator.StartGame(user, gamer, GameTypes.RandomRateGame);
 
-            user.GetStats();
+			gameCreator.StartGame(user, gamer, GameTypes.CummonGame);
+
+			user.GetStats();
         }
     }
 }

@@ -1,5 +1,13 @@
 ﻿namespace GameClasses
 {
+
+    enum GameTypes
+    {
+        CummonGame=1,
+        RandomRateGame=2,
+        TrainGame=3,
+    }
+
 	abstract class Game
     {
         private int Index;
