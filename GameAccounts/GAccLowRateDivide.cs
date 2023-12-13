@@ -1,8 +1,10 @@
-﻿namespace GameClasses
+﻿using DB.Service;
+
+namespace GameClasses
 {
-	class GAccLowRateDivide : GameAccount
+	public class GAccLowRateDivide : GameAccount
 	{
-		public GAccLowRateDivide(string userName) : base(userName) { }
+		public GAccLowRateDivide(string userName, int id, GameAccountService _service) : base(userName, id, _service) { }
 		protected override int CountRaiting(bool isWin, int rate)
 		{
 			if (isWin)

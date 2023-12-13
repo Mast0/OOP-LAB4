@@ -1,5 +1,8 @@
 ﻿using GameClasses;
 using FactoryGameClasses;
+using DB.Entity.Games;
+using DB;
+using DB.Service;
 
 namespace MainClass
 {
@@ -8,18 +11,34 @@ namespace MainClass
         static void Main(string[] args)
         {
             Game.IdentificationNumber = 1000;
-            var user = new GAccDobleRate("Mast");
-            var gamer = new GAccLowRateDivide("Deremion");
+
+            DBContext context = new DBContext();
+            GameAccountService accountService = new GameAccountService(context);
+            GameService gameService = new GameService(context);
+
+            accountService.Create("user1", DB.Entity.GameAccounts.GameAccountType.G_ACC_DOBLE_RATE);
+
+            accountService.Create("user2", DB.Entity.GameAccounts.GameAccountType.G_ACC_LOW_RATE_DIVIDE);
 
             var gameCreator = new GameCreator();
 
-            gameCreator.StartGame(user, gamer, GameTypes.TrainGame);
+            gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.TRAIN_GAME, gameService);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.TRAIN_GAME, gameService);
 
-			gameCreator.StartGame(user, gamer, GameTypes.RandomRateGame);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.RANDOM_RATE_GAME, gameService);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.RANDOM_RATE_GAME, gameService);
 
-			gameCreator.StartGame(user, gamer, GameTypes.CummonGame);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.CUMMON_GAME, gameService);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.CUMMON_GAME, gameService);
 
-			user.GetStats();
+            var accountList = accountService.GetAll();
+            foreach (var account in accountList)
+            {
+                if (account != null)
+                {
+                    account.GetStats();
+                }
+            }
         }
     }
 }

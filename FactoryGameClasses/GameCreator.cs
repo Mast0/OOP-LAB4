@@ -1,28 +1,30 @@
 ﻿using GameClasses;
+using DB.Entity.Games;
+using DB.Service;
 
 namespace FactoryGameClasses
 {
-	class GameCreator
+    class GameCreator
 	{
-		public Game CreateGame(GameAccount user1, GameAccount user2, GameTypes gameType, int rate = 10)
+		public Game CreateGame(GameAccount user1, GameAccount user2, GameTypes gameType, GameService service, int rate = 10)
 		{
-			if (GameTypes.RandomRateGame == gameType)
+			if (GameTypes.RANDOM_RATE_GAME == gameType)
 			{
-				return new RandomRateGame(user1, user2);
+				return new RandomRateGame(user1, user2, service);
 			}
-			else if (GameTypes.TrainGame == gameType)
+			else if (GameTypes.TRAIN_GAME == gameType)
 			{
-				return new TrainGame(user1, user2);
+				return new TrainGame(user1, user2, service);
 			}
 			else
 			{
-				return new CommonGame(user1, user2, rate);
+				return new Game(user1, user2, service, rate);
 			}
 		}
 
-		public string StartGame(GameAccount user1, GameAccount user2, GameTypes gameType, int rate = 10)
+		public string StartGame(GameAccount user1, GameAccount user2, GameTypes gameType, GameService service, int rate = 10)
 		{
-			var game = CreateGame(user1, user2, gameType, rate);
+			var game = CreateGame(user1, user2, gameType, service, rate);
 			return game.StartGame();
 		}
 	}

@@ -1,25 +1,22 @@
-﻿namespace GameClasses
+﻿using DB.Service;
+
+namespace GameClasses
 {
 
-    enum GameTypes
+	public class Game
     {
-        CummonGame=1,
-        RandomRateGame=2,
-        TrainGame=3,
-    }
-
-	abstract class Game
-    {
-        private int Index;
+        public int ID;
+        public int Index {  get; set; }
         public static int IdentificationNumber;
-        private GameAccount User1;
-        private GameAccount User2;
+        public GameAccount User1 { get; set; }
+        public GameAccount User2 { get; set; }
         private string GameStatistic;
-        protected string GameType = "Game";
+        public string GameType;
+		public int Rate { get; set; }
+        public GameService service { get; set; }
 
 
-
-        public Game(GameAccount user1, GameAccount user2, int rate = 0)
+		public Game(GameAccount user1, GameAccount user2, GameService _service, int rate = 10)
         {
             if (user1 == user2)
             {
@@ -27,13 +24,20 @@
             }
             User1 = user1;
             User2 = user2;
+            service = _service;
+            Rate = rate;
             IdentificationNumber++;
             Index = IdentificationNumber;
-
-            GameStatistic = "-";
+			GameType = "Common game\t";
+			GameStatistic = "-";
         }
 
-        abstract public int GameRateCount();
+        virtual public int GameRateCount()
+        {
+			var random = new Random();
+			int rate = Rate + random.Next(0, 10);
+			return rate;
+		}
 
         public string StartGame()
         {
@@ -58,8 +62,8 @@
                 $"\n\t {User2.UserName} current raiting: {User2.CurrentRating}\t\t {User1.UserName} current raiting: {User1.CurrentRating}";
                 
             }
-            User1.AddStatistic(this);
-            User2.AddStatistic(this);
+
+            service.Create(this);
 
             return winner;
         }
