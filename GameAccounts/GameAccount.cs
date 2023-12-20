@@ -6,7 +6,8 @@ namespace GameClasses
 {
     public class GameAccount
     {
-        public int ID;
+		public GameAccountType AccountType { get; set; }
+		public int ID;
         private string username;
         private int raiting;
         public string UserName { get { return username; } set { username = value; } }
@@ -18,14 +19,10 @@ namespace GameClasses
 				}
 			} }
         public List<GameRes> games { get; set; }
-        public GameAccountService service {  get; set; }
-
-        public GameAccount(string userName, int id, GameAccountService _service) {
+        public GameAccount(string userName) {
             username = userName;
             raiting = 1;
             games = new List<GameRes>();
-            service = _service;
-            ID = id;
 		}
 
         virtual protected int CountRaiting(bool isWin, int rate) {
@@ -50,7 +47,6 @@ namespace GameClasses
 				IsWin = true,
 				GameType = game.GameType
             });
-            service.Update(this);
         }
 
         public void LoseGame(Game game)
@@ -64,7 +60,6 @@ namespace GameClasses
 				IsWin = false,
 				GameType = game.GameType
 			});
-			service.Update(this);
 		}
 
 		public void GetStats()

@@ -1,4 +1,5 @@
-﻿using DB.Service;
+﻿using DB.Entity.Games;
+using DB.Service;
 
 namespace GameClasses
 {
@@ -13,10 +14,9 @@ namespace GameClasses
         private string GameStatistic;
         public string GameType;
 		public int Rate { get; set; }
-        public GameService service { get; set; }
+        public GameTypes Type { get; set; }
 
-
-		public Game(GameAccount user1, GameAccount user2, GameService _service, int rate = 10)
+		public Game(GameAccount user1, GameAccount user2, int rate = 10)
         {
             if (user1 == user2)
             {
@@ -24,7 +24,6 @@ namespace GameClasses
             }
             User1 = user1;
             User2 = user2;
-            service = _service;
             Rate = rate;
             IdentificationNumber++;
             Index = IdentificationNumber;
@@ -62,9 +61,6 @@ namespace GameClasses
                 $"\n\t {User2.UserName} current raiting: {User2.CurrentRating}\t\t {User1.UserName} current raiting: {User1.CurrentRating}";
                 
             }
-
-            service.Create(this);
-
             return winner;
         }
 

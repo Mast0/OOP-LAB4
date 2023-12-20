@@ -21,29 +21,83 @@ namespace DB.Service
 		}
 		public void Create(string userName, GameAccountType accountType)
 		{
-			if (accountType == GameAccountType.GAME_ACCOUNT)
-			{
-				repo.Create(Map(new GameAccount(userName, this.GetAll().Count(), this)));
-			}
-			else if (accountType == GameAccountType.G_ACC_DOBLE_RATE)
-			{
-				repo.Create(Map(new GAccDobleRate(userName, this.GetAll().Count(), this)));
-			}
-			else
-			{
-				repo.Create(Map(new GAccLowRateDivide(userName, this.GetAll().Count(), this)));
-			}
+			repo.Create(userName, accountType);
 		}
 		public List<GameAccount> GetAll()
 		{
-			var list = repo.GetAll()
-				.Select(x => x != null ? Map(x) : null)
-				.ToList();
-			return list;
+			List<GameAccountEntity> list = repo.GetAll();
+			List<GameAccount> newList = new List<GameAccount>();
+			foreach (GameAccountEntity entity in list)
+			{
+				switch (entity.AccountType)
+				{
+					case GameAccountType.GAME_ACCOUNT:
+						newList.Add(new GameAccount(entity.UserName)
+						{
+							ID = entity.ID,
+							UserName = entity.UserName,
+							CurrentRating = entity.CurrentRating,
+							games = MapGameHistory(entity.games),
+							AccountType = entity.AccountType,
+						});
+						break;
+					case GameAccountType.G_ACC_LOW_RATE_DIVIDE:
+						newList.Add(new GAccLowRateDivide(entity.UserName)
+						{
+							ID = entity.ID,
+							UserName = entity.UserName,
+							CurrentRating = entity.CurrentRating,
+							games = MapGameHistory(entity.games),
+							AccountType = entity.AccountType,
+						});
+						break;
+					case GameAccountType.G_ACC_DOBLE_RATE:
+						newList.Add(new GAccDobleRate(entity.UserName)
+						{
+							ID = entity.ID,
+							UserName = entity.UserName,
+							CurrentRating = entity.CurrentRating,
+							games = MapGameHistory(entity.games),
+							AccountType = entity.AccountType,
+						});
+						break;
+				}
+			}
+			return newList;
 		}
 		public GameAccount GetById(int id)
 		{
-			return Map(repo.GetById(id));
+		var entity = repo.GetById(id);
+			switch (entity.AccountType)
+			{
+				case GameAccountType.G_ACC_LOW_RATE_DIVIDE:
+					return new GAccLowRateDivide(entity.UserName)
+					{
+						ID = entity.ID,
+						UserName = entity.UserName,
+						CurrentRating = entity.CurrentRating,
+						games = MapGameHistory(entity.games),
+						AccountType = entity.AccountType,
+					};
+				case GameAccountType.G_ACC_DOBLE_RATE:
+					return new GAccDobleRate(entity.UserName)
+					{
+						ID = entity.ID,
+						UserName = entity.UserName,
+						CurrentRating = entity.CurrentRating,
+						games = MapGameHistory(entity.games),
+						AccountType = entity.AccountType,
+					};
+				default:
+					return new GameAccount(entity.UserName)
+					{
+						ID = entity.ID,
+						UserName = entity.UserName,
+						CurrentRating = entity.CurrentRating,
+						games = MapGameHistory(entity.games),
+						AccountType = entity.AccountType,
+					};
+			}
 		}
 		public void Update(GameAccount account)
 		{
@@ -109,9 +163,8 @@ namespace DB.Service
 		private GameAccount Map(GameAccountEntity account)
 		{
 			if (account == null) { return null; }
-			return new GameAccount(account.UserName, account.ID, this)
+			return new GameAccount(account.UserName)
 			{
-				service = this,
 				ID = account.ID,
 				UserName = account.UserName,
 				CurrentRating = account.CurrentRating,
@@ -135,9 +188,8 @@ namespace DB.Service
 		private GAccDobleRate Map(GAccDobleRateEntity account)
 		{
 			if (account == null) { return null; }
-			return new GAccDobleRate(account.UserName, account.ID, this)
+			return new GAccDobleRate(account.UserName)
 			{
-				service = this,
 				ID = account.ID,
 				UserName = account.UserName,
 				CurrentRating = account.CurrentRating,
@@ -161,9 +213,8 @@ namespace DB.Service
 		private GAccLowRateDivide Map(GAccLowRateDivideEntity account)
 		{
 			if (account == null) { return null; }
-			return new GAccLowRateDivide(account.UserName, account.ID, this)
+			return new GAccLowRateDivide(account.UserName)
 			{
-				service = this,
 				ID = account.ID,
 				UserName = account.UserName,
 				CurrentRating = account.CurrentRating,

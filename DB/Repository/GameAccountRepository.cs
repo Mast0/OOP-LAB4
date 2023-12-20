@@ -16,9 +16,41 @@ namespace DB.Repository
 		{
 			context = _context;
 		}
-		public void Create(GameAccountEntity account)
+		public void Create(string userName, GameAccountType type)
 		{
-			context.GameAccounts.Add(account);
+			switch (type)
+			{
+				case GameAccountType.GAME_ACCOUNT:
+					context.GameAccounts.Add(new GameAccountEntity
+					{
+						ID = context.GameAccounts.Count,
+						AccountType = type,
+						UserName = userName,
+						CurrentRating = 0,
+						games = new List<GameHistoryEntity>()
+					});
+					break;
+				case GameAccountType.G_ACC_LOW_RATE_DIVIDE:
+					context.GameAccounts.Add(new GAccLowRateDivideEntity
+					{
+						ID = context.GameAccounts.Count,
+						AccountType = type,
+						UserName = userName,
+						CurrentRating = 0,
+						games = new List<GameHistoryEntity>()
+					});
+					break;
+				case GameAccountType.G_ACC_DOBLE_RATE:
+					context.GameAccounts.Add(new GAccDobleRateEntity
+					{
+						ID = context.GameAccounts.Count,
+						AccountType = type,
+						UserName = userName,
+						CurrentRating = 0,
+						games = new List<GameHistoryEntity>()
+					});
+					break;
+			}
 		}
 		public List<GameAccountEntity> GetAll()
 		{

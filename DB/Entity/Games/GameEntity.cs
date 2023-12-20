@@ -17,7 +17,6 @@ namespace DB.Entity.Games
 
     public class GameEntity
     {
-        public GameService service;
         public int ID;
         public int Index { get; set; }
         public GameAccount User1 { get; set; }

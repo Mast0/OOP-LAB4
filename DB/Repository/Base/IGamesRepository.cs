@@ -1,4 +1,5 @@
 ﻿using DB.Entity.Games;
+using GameClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace DB.Repository.Base
 {
     public interface IGamesRepository
 	{
-		public void Create(GameEntity game);
+		public void Create(GameTypes type, GameAccount user1, GameAccount user2, int rate = 10);
 		public List<GameEntity> GetAll();
 		public GameEntity GetById(int id);
 		public void Update(GameEntity game);

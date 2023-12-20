@@ -22,16 +22,16 @@ namespace MainClass
 
             var gameCreator = new GameCreator();
 
-            gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.TRAIN_GAME, gameService);
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.TRAIN_GAME, gameService);
+            gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.TRAIN_GAME, gameService, accountService);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.TRAIN_GAME, gameService, accountService);
 
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.RANDOM_RATE_GAME, gameService);
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.RANDOM_RATE_GAME, gameService);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.RANDOM_RATE_GAME, gameService, accountService);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.RANDOM_RATE_GAME, gameService, accountService);
 
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.CUMMON_GAME, gameService);
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.CUMMON_GAME, gameService);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.CUMMON_GAME, gameService, accountService);
+			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.CUMMON_GAME, gameService, accountService);
 
-            var accountList = accountService.GetAll();
+			var accountList = accountService.GetAll();
             foreach (var account in accountList)
             {
                 if (account != null)

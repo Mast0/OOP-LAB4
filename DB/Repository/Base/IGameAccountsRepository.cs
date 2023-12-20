@@ -10,7 +10,7 @@ namespace DB.Repository.Base
 {
     public interface IGameAccountsRepository
 	{
-		public void Create(GameAccountEntity gameAccount);
+		public void Create(string userName, GameAccountType type);
 		public List<GameAccountEntity> GetAll();
 		public GameAccountEntity GetById(int id);
 		public void Update(GameAccountEntity gameAccount);

@@ -4,7 +4,7 @@ namespace GameClasses
 {
 	public class GAccDobleRate : GameAccount
 	{
-		public GAccDobleRate(string userName, int id, GameAccountService _service) : base(userName, id, _service) { }
+		public GAccDobleRate(string userName) : base(userName) { }
 		protected override int CountRaiting(bool isWin, int rate)
 		{
 			if (isWin)

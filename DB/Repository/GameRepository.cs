@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameClasses;
 
 namespace DB.Repository
 {
@@ -15,9 +16,44 @@ namespace DB.Repository
 		{
 			context = _context;
 		}
-		public void Create(GameEntity game)
+		public void Create(GameTypes type, GameAccount user1, GameAccount user2, int rate = 10)
 		{
-			context.Games.Add(game);
+			switch (type)
+			{
+				case GameTypes.CUMMON_GAME:
+					context.Games.Add(new GameEntity
+					{
+						ID = context.Games.Count,
+						GameType = type,
+						User1 = user1,
+						User2 = user2,
+						Rate = rate,
+						Index = Game.IdentificationNumber,
+			});
+					break;
+				case GameTypes.RANDOM_RATE_GAME:
+					context.Games.Add(new RandomRateGameEntity
+					{
+						ID = context.Games.Count,
+						GameType = type,
+						User1 = user1,
+						User2 = user2,
+						Rate = rate,
+						Index = Game.IdentificationNumber,
+					});
+					break;
+				case GameTypes.TRAIN_GAME:
+					context.Games.Add(new TrainGameEntity
+					{
+						ID = context.Games.Count,
+						GameType = type,
+						User1 = user1,
+						User2 = user2,
+						Rate = rate,
+						Index = Game.IdentificationNumber,
+					});
+					break;
+			}
 		}
 		public List<GameEntity> GetAll()
 		{
