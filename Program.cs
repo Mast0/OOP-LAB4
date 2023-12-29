@@ -3,6 +3,8 @@ using FactoryGameClasses;
 using DB.Entity.Games;
 using DB;
 using DB.Service;
+using UI;
+using System.Text;
 
 namespace MainClass
 {
@@ -10,35 +12,15 @@ namespace MainClass
     {
         static void Main(string[] args)
         {
-            Game.IdentificationNumber = 1000;
+			Console.OutputEncoding = Encoding.UTF8;
+			Game.IdentificationNumber = 1000;
 
             DBContext context = new DBContext();
             GameAccountService accountService = new GameAccountService(context);
             GameService gameService = new GameService(context);
+            StartUI UI = new StartUI(accountService, gameService);
 
-            accountService.Create("user1", DB.Entity.GameAccounts.GameAccountType.G_ACC_DOBLE_RATE);
-
-            accountService.Create("user2", DB.Entity.GameAccounts.GameAccountType.G_ACC_LOW_RATE_DIVIDE);
-
-            var gameCreator = new GameCreator();
-
-            gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.TRAIN_GAME, gameService, accountService);
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.TRAIN_GAME, gameService, accountService);
-
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.RANDOM_RATE_GAME, gameService, accountService);
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.RANDOM_RATE_GAME, gameService, accountService);
-
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.CUMMON_GAME, gameService, accountService);
-			gameCreator.StartGame(accountService.GetById(0), accountService.GetById(1), GameTypes.CUMMON_GAME, gameService, accountService);
-
-			var accountList = accountService.GetAll();
-            foreach (var account in accountList)
-            {
-                if (account != null)
-                {
-                    account.GetStats();
-                }
-            }
+            UI.Operation();
         }
     }
 }
